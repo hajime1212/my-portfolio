@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+.error-message{
+	color: red;
+	font-size: 0.9;
+	margin-top: 5px;
+}
+
+bodey {
+	font-family: Arial, sans-seif;
+	margin: 0;
+	padding: 0;
+	background-color: #f4f4f9;
+}
+
+header {
+	background-color: #333;
+	color: white;
+	padding: 10px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+header h1 {
+	margin: 0;
+	font-size: 24px;
+}
+
+footer {
+	display: flex;
+	
+	height:100px;
+	
+	/*　垂直方向の配置を指定 */
+	align-items: flex-end; 
+	
+	
+	
+	/*コンテンツ右寄せ
+	justify-content: flex-end; */
+}
+
+/*　モバイル適用スタイル（横幅600ｐｘ以下の場合）　*/
+@media (max-width: 600px) {
+	
+	/*　テーブルヘッダ非表示　*/
+	thead {
+	display: none;
+	}
+	
+	/*　テーブル各行を縦に積み重ねて表示 */
+	tr{
+	display: black;
+	margin-bottom: 15px;
+	}
+	
+	/* テーブルの各セル（td）を縦に並べる */
+	td{
+	display: block;
+	text-align: rigaht;
+	}
+	
+	/* 各セルの前に見出しを表示する */
+	td::before{
+	content: attr(data-label);
+	font-weight: bold;
+	float: left;
+	}
+	
+}

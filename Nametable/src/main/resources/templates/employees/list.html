@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>従業員一覧</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<!--	<header>
+		<div>
+			<form th:action="@{/logout}" method="post">
+				<button type="submit">ログアウト</button>
+			</form>	
+		</div>
+	</header> -->
+	<div>
+		<h1>従業員一覧</h1>
+
+		<div th:if="${message}">
+			<span th:text="${message}"></span>
+		</div>
+		<div th:if="${errorMessage}">
+			<span th:text="${errorMessage}"></span>
+		</div>
+		<p>
+			<a href="/employees/new">新規従業員登録</a>
+		</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>名前</th>
+					<th>メール</th>
+					<th>部署</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="employee : ${employees}">
+					<td data-label="ID:" th:text="${employee.id}">1</td>
+					<td data-label="名前:" th:text="${employee.name}">山田太郎</td>
+					<td data-label="email:" th:text="${employee.email}">deapa@haosk.co.jp</td>
+					<td data-label="部署:" th:text="${employee.department.name}">部署</td>
+					<td><a th:href="@{/employees/{id}/edit(id=${employee.id})}">編集</a>
+						<form th:action="@{/employees/{id}/delete(id=${employee.id})}"
+							method="post" onsubmit="return confirm('本当に削除しますか？');">
+							<button type="submit">削除</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	
+	<footer>
+		<div class="footer-buttons">
+			<form th:action="@{/logout}" method="post">
+				<button type="submit">ログアウト</button>
+			</form>	
+		</div>
+	</footer>
+
+</body>
+</html>
