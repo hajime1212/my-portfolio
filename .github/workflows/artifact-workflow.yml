@@ -1,0 +1,30 @@
+# ワークフロー全体の名前
+name: アーティファクト作成テスト
+
+# ワークフローが実行される「きっかけ」
+on:
+  # mainブランチにプッシュされた時
+  push:
+    branches: [ main ]
+
+# 実行する「仕事」の内容
+jobs:
+  # jobの名前（自由に設定可能）
+  create-and-upload-artifact:
+    # 仕事を実行する仮想環境の種類
+    runs-on: ubuntu-latest
+    
+    # 具体的な「手順」
+    steps:
+      # 手順1: "output.txt" という名前でファイルを作成する
+      - name: ファイルを作成
+        run: echo "これが成果物です。" > output.txt
+
+      # 手順2: 作成したファイルをアーティファクトとしてアップロードする
+      - name: アーティファクトをアップロード
+        uses: actions/upload-artifact@v4
+        with:
+          # アーティファクトに付ける名前
+          name: my-test-artifact
+          # アップロードするファイル（手順1で作成したもの）
+          path: output.txt
