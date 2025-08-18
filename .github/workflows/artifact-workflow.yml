@@ -7,7 +7,6 @@ on:
   push:
     branches: [ main ]
 
-
 # 実行する「仕事」の内容
 jobs:
   # jobの名前（自由に設定可能）
