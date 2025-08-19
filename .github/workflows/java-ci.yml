@@ -19,11 +19,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      # 3. 【重要】ここにあるファイル一覧を表示します
-      - name: List files in workspace
-        run: ls -la
-
-      # 4. Mavenでビルドを実行
+      
+      # 3. Mavenでビルドを実行（作業ディレクトリを指定）
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+        working-directory: ./Nametable # ✅ この行が重要！
