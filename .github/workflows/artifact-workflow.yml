@@ -5,7 +5,7 @@ name: アーティファクト作成テスト
 on:
   # mainブランチにプッシュされた時
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 # 実行する「仕事」の内容
 jobs:
