@@ -1,0 +1,18 @@
+# ワークフローの名前
+name: 動作確認チェック
+
+# ワークフローが実行される「きっかけ」
+on:
+  # 1. mainブランチにプッシュされた時
+  push:
+    branches: [ master ]
+  # 2. 手動実行ボタンが押された時
+  workflow_dispatch:
+
+# 実行する「仕事」の内容
+jobs:
+  check-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 実行成功のメッセージ
+        run: echo "ワークフローは正常に実行されました。"
