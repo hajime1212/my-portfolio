@@ -10,18 +10,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.Repository.EmployeeRepository;
-import com.example.Service.UserDetailsServiceImp;
 
 @Configuration //アプリケーションの設定クラス
 @EnableWebSecurity //Spring Securityの有効化
 public class SecurityConfig {
 	
 	//private final EmployeeRepository employeeRepository;
-	private final UserDetailsServiceImp userDetailsServiceImp;
+	private final UserDetailsService userDetailsService;
 	
-	public SecurityConfig(EmployeeRepository employeeRepository, UserDetailsServiceImp userDetailsServiceImp) {
+	public SecurityConfig(EmployeeRepository employeeRepository, UserDetailsService userDetailsService) {
 		//this.employeeRepository = employeeRepository;
-		this.userDetailsServiceImp = userDetailsServiceImp;
+		this.userDetailsService = userDetailsService;
+	}
+	
+	@Bean
+	UserDetailsService userDetailsService() {
+		return userDetailsService;
 	}
 	
 	@Bean
@@ -57,9 +61,9 @@ public class SecurityConfig {
 	}
 	
 	
-	@Bean
+//	@Bean
 	// ユーザー照会
-	UserDetailsService userDetailsService() {
+//	UserDetailsService userDetailsService() {
 		
 //		テスト用ユーザ名の設定
 //		UserDetails user = User.withUsername("user")
@@ -88,6 +92,6 @@ public class SecurityConfig {
 //		};
 		
 		// 上記メソッドは重複していたので、実装クラスを再利用
-		return userDetailsServiceImp;
-	}
+//		return userDetailsServiceImp;
+//	}
 }
