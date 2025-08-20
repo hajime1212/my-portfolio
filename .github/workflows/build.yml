@@ -1,0 +1,34 @@
+# ワークフローの名前
+name: Build and Archive Java Project
+
+# ワークフローが実行される「きっかけ」
+on:
+  push:
+    branches: [ master ] # あなたのブランチは "master"
+
+jobs:
+  build-and-archive:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. リポジトリのソースコードをコピーする
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      # 2. Java 21 をセットアップする
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21' # あなたのプロジェクトに必要なJavaは "21"
+          distribution: 'temurin'
+      
+      # 3. Mavenでプロジェクトをビルドする
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+        working-directory: ./Nametable # プロジェクトは "Nametable" フォルダの中
+
+      # 4. 完成したプログラムをアーティファクトとして保存する
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-java-app # 保存する時の名前
+          path: Nametable/target/*.jar # 保存するファイルの場所

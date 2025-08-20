@@ -1,0 +1,26 @@
+# ワークフローの名前
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ master ] # あなたのブランチがmainなら [ main ] に変更
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. リポジトリのコードをチェックアウト
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      # 2. Java環境をセットアップ
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      
+      # 3. Mavenでビルドを実行（作業ディレクトリを指定）
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+        working-directory: ./Nametable # ✅ この行が重要！
