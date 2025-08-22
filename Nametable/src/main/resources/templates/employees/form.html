@@ -15,10 +15,15 @@
 			th:object="${employee}" method="post">
 
 			<div>
-				<label for="name">名前</label> <input type="text" id="name"
-					th:field="*{name}" />
+				<label for="name">名前</label> 
+				<input type="text" id="name"th:field="*{name}" />
 				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 					class="error-message"></div>
+			</div>
+			<div>
+				<label for="password">パスワード:</label>
+				<input type="password" id="password" th:field="*{password}" />
+				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 			</div>
 			<div>
 				<label for="email">メールアドレス:</label> <input type="text" id="email"

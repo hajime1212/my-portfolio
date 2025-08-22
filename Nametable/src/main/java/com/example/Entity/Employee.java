@@ -44,6 +44,7 @@ public class Employee {
 	private String email;
 	
 	@Column(name ="password", nullable = false)
+	@NotBlank(message = "パスワードは必須項目です。")
 	private String password;
 
 	

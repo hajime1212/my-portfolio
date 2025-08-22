@@ -1,5 +1,6 @@
 package com.example;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,8 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.example.Repository.EmployeeRepository;
-
 @Configuration //アプリケーションの設定クラス
 @EnableWebSecurity //Spring Securityの有効化
 public class SecurityConfig {
@@ -18,15 +17,15 @@ public class SecurityConfig {
 	//private final EmployeeRepository employeeRepository;
 	private final UserDetailsService userDetailsService;
 	
-	public SecurityConfig(EmployeeRepository employeeRepository, UserDetailsService userDetailsService) {
+	public SecurityConfig(UserDetailsService userDetailsService) {
 		//this.employeeRepository = employeeRepository;
 		this.userDetailsService = userDetailsService;
 	}
 	
-	@Bean
-	UserDetailsService userDetailsService() {
-		return userDetailsService;
-	}
+//	@Bean
+//	UserDetailsService userDetailsService() {
+//		return userDetailsService;
+//	}
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception {
