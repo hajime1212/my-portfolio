@@ -3,6 +3,8 @@ package com.example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,13 +14,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration //アプリケーションの設定クラス
 @EnableWebSecurity //Spring Securityの有効化
+@EnableMethodSecurity
 public class SecurityConfig {
 	
 	//private final EmployeeRepository employeeRepository;
-	@Autowired
+	
 	private final UserDetailsService userDetailsService;
 	
-	public SecurityConfig(UserDetailsService userDetailsService) {
+	public SecurityConfig(@Autowired UserDetailsService userDetailsService) {
 		//this.employeeRepository = employeeRepository;
 		this.userDetailsService = userDetailsService;
 	}
@@ -27,6 +30,17 @@ public class SecurityConfig {
 //	UserDetailsService userDetailsService() {
 //		return userDetailsService;
 //	}
+	
+	//パスワードをハッシュ化するメソッド
+		@Bean
+		PasswordEncoder passwordEncoder() {
+			return new BCryptPasswordEncoder();
+		}
+		
+		@Autowired
+		public void configure(AuthenticationManagerBuilder auth)throws Exception {
+			auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		}
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception {
@@ -54,11 +68,6 @@ public class SecurityConfig {
 	 	
 	}
 	
-	//パスワードをハッシュ化するメソッド
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 	
 	
 //	@Bean

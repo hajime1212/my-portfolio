@@ -38,7 +38,7 @@ public class Employee {
 	@NotBlank(message ="名前は必須項目です。")
 	private String name;
 	
-	@Column(name = "email")
+	//@Column(name = "email")　DBと同じカラム名であれば不要
 	@Email(message = "入力形式が正しくありません。")
 	@NotBlank(message = "メールアドレスは必須項目です。")
 	private String email;
