@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 	
 	//private final EmployeeRepository employeeRepository;
+	@Autowired
 	private final UserDetailsService userDetailsService;
 	
 	public SecurityConfig(UserDetailsService userDetailsService) {
