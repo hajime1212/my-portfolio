@@ -1,9 +1,7 @@
 package com.example;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,16 +12,18 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration //アプリケーションの設定クラス
 @EnableWebSecurity //Spring Securityの有効化
-@EnableMethodSecurity
+@EnableMethodSecurity // メソッド単位のセキュリティ
 public class SecurityConfig {
 	
 	//private final EmployeeRepository employeeRepository;
 	
 	private final UserDetailsService userDetailsService;
+	private final PasswordEncoder passwordEncoder;
 	
-	public SecurityConfig(@Autowired UserDetailsService userDetailsService) {
+	public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
 		//this.employeeRepository = employeeRepository;
 		this.userDetailsService = userDetailsService;
+		this.passwordEncoder = passwordEncoder;
 	}
 	
 //	@Bean
@@ -32,23 +32,20 @@ public class SecurityConfig {
 //	}
 	
 	//パスワードをハッシュ化するメソッド
-		@Bean
-		PasswordEncoder passwordEncoder() {
-			return new BCryptPasswordEncoder();
-		}
 		
-		@Autowired
-		public void configure(AuthenticationManagerBuilder auth)throws Exception {
-			auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-		}
+		
+//		@Autowired
+//		public void configure(AuthenticationManagerBuilder auth)throws Exception {
+//			auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//		}
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception {
 	 http
 	 	.authorizeHttpRequests(authorize -> authorize
 	 			//このページはログイン必須で設定
-	 			.requestMatchers("/employees").authenticated()
-	 			.requestMatchers("/employees/**").authenticated()
+	 			.requestMatchers("/employees").hasRole("USER")
+	 			.requestMatchers("/employees/**").hasRole("USER")
 	 			//このページはログインなしでアクセスを許可
 	 			.requestMatchers("/login").permitAll()
 	 			//上記以外のページはすべてログインなしでアクセス許可
@@ -68,7 +65,11 @@ public class SecurityConfig {
 	 	
 	}
 	
-	
+	// 専用クラスへ
+//	@Bean
+//	PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 	
 //	@Bean
 	// ユーザー照会
